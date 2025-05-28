@@ -15,7 +15,7 @@ STATE_UNKNOWN = 3
 class CheckResult:
     """Simple storage class for return values of the script"""
 
-    def __init__(self, returnCode=None, serviceName=None, returnMessage=None, metrics=None, longOutput=None):
+    def __init__(self, returnCode=None, serviceName=None, returnMessage=None, metrics=None):
 
         if returnCode is None:
             self.returnCode = STATE_UNKNOWN
@@ -37,11 +37,6 @@ class CheckResult:
         else:
             self.metrics = metrics
 
-        if longOutput is None:
-            self.longOutput = None
-        else:
-            self.longOutput = longOutput
-
     def printMonitoringOutput(self):
         """
         Concatenate full message and print it, then exit with returnCode     
@@ -55,9 +50,6 @@ class CheckResult:
         else:
             returnText = returnText + " - "
         returnText = returnText + " " + self.returnMessage
-        if self.longOutput is not None:
-            returnText = returnText + " " + self.longOutput
-
         print(returnText)
         sys.exit(self.returnCode)
 
@@ -128,8 +120,6 @@ def argumentParser():
                               help='Warning if online nodes below this value (default=5)', default=5)
     statusParser.add_argument('-c', '--critical', dest='critical', action='store',
                               help='Critical if online nodes below this value (default=3)', default=3)
-    statusParser.add_argument('-L', '--Long', dest='longOutput', action='store_true',
-                              help='Displaies additional informations in the long output', default=False)
     statusParser.add_argument('-n', '--node', dest='node', action='store_true',
                               help='Check state of the nodes', default=os.getenv('HOSTNAME'))
     return parser
