@@ -113,13 +113,13 @@ def checkNodeHealth(args):
 
     if ((state == "HEALTHY") or (state == "TIPS")):
         checkResult.returnCode = STATE_OK
-        checkResult.returnMessage = f"OK: Node is in state '{str(state)}'"
+        checkResult.returnMessage = f"OK: {comp} is in state '{str(state)}'"
     elif (state == "DEGRADED"):
         checkResult.returnCode = STATE_WARNING
-        checkResult.returnMessage = f"WARNING: Node is in state '{str(state)}'"
+        checkResult.returnMessage = f"WARNING: {comp} is in state '{str(state)}'"
     elif (state == "FAILED"):
         checkResult.returnCode = STATE_CRITICAL
-        checkResult.returnMessage = f"CRITICAL: Node is in state '{str(state)}'"
+        checkResult.returnMessage = f"CRITICAL: {comp} is in state '{str(state)}'"
     checkResult.printMonitoringOutput()
 
 
