@@ -88,15 +88,14 @@ def checkRequirements():
 
 def checkNodeHealth(args):
     checkResult = CheckResult()
-    checkResult.serviceName = "Spectrum Scale Node Health"
+    comp = args.component.lower()
+    checkResult.serviceName = f"Spectrum Scale {comp} Health"
 
     output = executeBashCommand(f"/usr/lpp/mmfs/bin/mmhealth node show -N {args.node} -Y")
     stateOutput = (row for row in output.split("\n") if row.startswith("mmhealth:State:"))
-
     table = csv.DictReader(stateOutput, delimiter=":")
-    criteria = {"component": "NODE", "entitytype": "NODE"}
+    criteria = {"component": args.component, "entitytype": "NODE"}
     row = getRowByFields(table, criteria)
-
     state = row["status"]
 
     if ((state == "HEALTHY") or (state == "TIPS")):
@@ -121,6 +120,8 @@ def argumentParser():
     healthParser = subParser.add_parser('health', help='Check the health on a node')
     healthParser.add_argument('-n', '--node', dest='node', action='store_true',
                               help='Check state of the nodes', default=os.getenv('HOSTNAME'))
+    healthParser.add_argument('--component', dest='component', action='store',
+                              help='Check state of the nodes', default='NODE')
     return parser
 
 
