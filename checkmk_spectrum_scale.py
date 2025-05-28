@@ -98,6 +98,7 @@ def createCheck(args):
 
 
 def checkNodeHealth(args):
+    state = None
     checkResult = CheckResult()
     comp = args.component.title()
     checkResult.serviceName = f"Spectrum Scale {comp} Health"
@@ -109,17 +110,20 @@ def checkNodeHealth(args):
     table = csv.DictReader(stateOutput, delimiter=":")
     criteria = {"component": args.component.upper(), "entitytype": "NODE"}
     row = getRowByFields(table, criteria)
-    state = row["status"]
-
-    if ((state == "HEALTHY") or (state == "TIPS")):
-        checkResult.returnCode = STATE_OK
-        checkResult.returnMessage = f"OK: {comp} is in state '{str(state)}'"
-    elif (state == "DEGRADED"):
-        checkResult.returnCode = STATE_WARNING
-        checkResult.returnMessage = f"WARNING: {comp} is in state '{str(state)}'"
-    elif (state == "FAILED"):
-        checkResult.returnCode = STATE_CRITICAL
-        checkResult.returnMessage = f"CRITICAL: {comp} is in state '{str(state)}'"
+    try:
+        state = row["status"]
+    except TypeError:
+        checkResult.returnMessage = f"UNKNOWN: Health of '{comp}' not found'"
+    finally:
+        if ((state == "HEALTHY") or (state == "TIPS")):
+            checkResult.returnCode = STATE_OK
+            checkResult.returnMessage = f"OK: {comp} is in state '{str(state)}'"
+        elif (state == "DEGRADED"):
+            checkResult.returnCode = STATE_WARNING
+            checkResult.returnMessage = f"WARNING: {comp} is in state '{str(state)}'"
+        elif (state == "FAILED"):
+            checkResult.returnCode = STATE_CRITICAL
+            checkResult.returnMessage = f"CRITICAL: {comp} is in state '{str(state)}'"
     checkResult.printMonitoringOutput()
 
 
