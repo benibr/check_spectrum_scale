@@ -87,6 +87,16 @@ def checkRequirements():
         checkResult.printMonitoringOutput()
 
 
+def createCheck(args):
+    text = f"""#!/bin/bash
+/usr/lib/check_mk_agent/local/checkmk_spectrum_scale.py health --node {args.node} --component {args.component}
+"""
+    fname = f"/usr/lib/check_mk_agent/local/checkmk_spectrum_scale_health_node_{args.node}_{args.component}"
+    with open(fname, 'w') as file:
+        file.write(text)
+    sys.exit(STATE_OK)
+
+
 def checkNodeHealth(args):
     checkResult = CheckResult()
     comp = args.component.title()
@@ -119,6 +129,8 @@ def argumentParser():
     """
     parser = argparse.ArgumentParser(
         description='Check heath of the GPFS node')
+    parser.add_argument('--create-check', dest='createCheck', action='store_true',
+                              help='Create a local check file to the specified command for checkMK discovery')
 
     subParser = parser.add_subparsers()
     healthParser = subParser.add_parser(
@@ -136,6 +148,9 @@ if __name__ == '__main__':
 
     parser = argumentParser()
     args = parser.parse_args()
+
+    if args.createCheck:
+        createCheck(args)
 
     checkRequirements()
     checkNodeHealth(args)
