@@ -101,7 +101,7 @@ def checkNodeHealth(args):
 
     if not ((state == "HEALTHY") or (state == "TIPS")):
         checkResult.returnCode = STATE_CRITICAL
-        checkResult.returnMessage = "CRITICAL: Node is in state 'str(state)'"
+        checkResult.returnMessage = f"CRITICAL: Node is in state '{str(state)}'"
     else:
         checkResult.returnCode = STATE_OK
         checkResult.returnMessage = f"OK: Node is in state '{str(state)}'"
