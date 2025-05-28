@@ -106,7 +106,7 @@ def checkNodeHealth(args):
     stateOutput = (row for row in output.split(
         "\n") if row.startswith("mmhealth:State:"))
     table = csv.DictReader(stateOutput, delimiter=":")
-    criteria = {"component": args.component, "entitytype": "NODE"}
+    criteria = {"component": args.component.upper(), "entitytype": "NODE"}
     row = getRowByFields(table, criteria)
     state = row["status"]
 
