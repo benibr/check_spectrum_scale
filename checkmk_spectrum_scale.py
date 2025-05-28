@@ -96,7 +96,7 @@ def checkRequirements():
 
 def checkHealth(args):
     checkResult = CheckResult()
-    checkResult.serviceName = "Node Health"
+    checkResult.serviceName = "Spectrum Scale Node Health"
 
     output = executeBashCommand("/usr/lpp/mmfs/bin/mmhealth node show -Y")
     stateOutput = (row for row in output.split("\n") if row.startswith("mmhealth:State:"))
