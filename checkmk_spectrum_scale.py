@@ -93,6 +93,7 @@ def createCheck(args):
     fname = f"/usr/lib/check_mk_agent/local/checkmk_spectrum_scale_health_node_{args.node}_{args.component}"
     with open(fname, 'w') as file:
         file.write(text)
+    os.chmod(fname, 0o755)
     sys.exit(STATE_OK)
 
 
