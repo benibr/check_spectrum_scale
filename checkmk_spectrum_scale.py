@@ -88,7 +88,7 @@ def checkRequirements():
 
 def checkNodeHealth(args):
     checkResult = CheckResult()
-    comp = args.component.lower()
+    comp = args.component.title()
     checkResult.serviceName = f"Spectrum Scale {comp} Health"
 
     output = executeBashCommand(f"/usr/lpp/mmfs/bin/mmhealth node show -N {args.node} -Y")
