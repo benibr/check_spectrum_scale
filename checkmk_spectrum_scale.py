@@ -135,7 +135,7 @@ def argumentParser():
     subParser = parser.add_subparsers()
     healthParser = subParser.add_parser(
         'health', help='Check the health on a node')
-    healthParser.add_argument('-n', '--node', dest='node', action='store_true',
+    healthParser.add_argument('-n', '--node', dest='node', action='store',
                               help='Check state of the nodes', default=os.getenv('HOSTNAME'))
     healthParser.add_argument('--component', dest='component', action='store',
                               help='Check state of the nodes', default='NODE')
