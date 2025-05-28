@@ -90,7 +90,7 @@ def checkNodeHealth(args):
     checkResult = CheckResult()
     checkResult.serviceName = "Spectrum Scale Node Health"
 
-    output = executeBashCommand("/usr/lpp/mmfs/bin/mmhealth node show -Y")
+    output = executeBashCommand(f"/usr/lpp/mmfs/bin/mmhealth node -N {args.node} show -Y")
     stateOutput = (row for row in output.split("\n") if row.startswith("mmhealth:State:"))
 
     table = csv.DictReader(stateOutput, delimiter=":")
