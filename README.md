@@ -10,6 +10,7 @@ checks the status of a Spectrum Scale Cluster/Nodes (GPFS)
 ./checkmk_spectrum_scale.py health
 ```
 
-## Inspiured by
+## Greetings
 
+This repo used to be a fork of
 [github.com/theGidy/check\_spectrum\_scale](https://github.com/theGidy/check_spectrum_scale/tree/master())
