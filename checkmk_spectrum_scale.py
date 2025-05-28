@@ -116,10 +116,6 @@ def argumentParser():
 
     subParser = parser.add_subparsers()
     statusParser = subParser.add_parser('health', help='Check the health on a node')
-    statusParser.add_argument('-w', '--warning', dest='warning', action='store',
-                              help='Warning if online nodes below this value (default=5)', default=5)
-    statusParser.add_argument('-c', '--critical', dest='critical', action='store',
-                              help='Critical if online nodes below this value (default=3)', default=3)
     statusParser.add_argument('-n', '--node', dest='node', action='store_true',
                               help='Check state of the nodes', default=os.getenv('HOSTNAME'))
     return parser
