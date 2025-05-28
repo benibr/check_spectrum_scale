@@ -99,12 +99,15 @@ def checkNodeHealth(args):
 
     state = row["status"]
 
-    if not ((state == "HEALTHY") or (state == "TIPS")):
-        checkResult.returnCode = STATE_CRITICAL
-        checkResult.returnMessage = f"CRITICAL: Node is in state '{str(state)}'"
-    else:
+    if ((state == "HEALTHY") or (state == "TIPS")):
         checkResult.returnCode = STATE_OK
         checkResult.returnMessage = f"OK: Node is in state '{str(state)}'"
+    elif (state == "DEGRADED"):
+        checkResult.returnCode = STATE_WARNING
+        checkResult.returnMessage = f"WARNING: Node is in state '{str(state)}'"
+    elif (state == "FAILED"):
+        checkResult.returnCode = STATE_CRITICAL
+        checkResult.returnMessage = f"CRITICAL: Node is in state '{str(state)}'"
     checkResult.printMonitoringOutput()
 
 
