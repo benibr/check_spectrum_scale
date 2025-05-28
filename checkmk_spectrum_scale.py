@@ -69,7 +69,8 @@ def executeBashCommand(command):
         Returned string from command
     """
     print(f"running command '{command}'", file=sys.stderr)
-    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE, universal_newlines=True)
+    process = subprocess.Popen(
+        command.split(), stdout=subprocess.PIPE, universal_newlines=True)
     return str(process.communicate()[0])
 
 
@@ -91,8 +92,10 @@ def checkNodeHealth(args):
     comp = args.component.title()
     checkResult.serviceName = f"Spectrum Scale {comp} Health"
 
-    output = executeBashCommand(f"/usr/lpp/mmfs/bin/mmhealth node show -N {args.node} -Y")
-    stateOutput = (row for row in output.split("\n") if row.startswith("mmhealth:State:"))
+    output = executeBashCommand(
+        f"/usr/lpp/mmfs/bin/mmhealth node show -N {args.node} -Y")
+    stateOutput = (row for row in output.split(
+        "\n") if row.startswith("mmhealth:State:"))
     table = csv.DictReader(stateOutput, delimiter=":")
     criteria = {"component": args.component, "entitytype": "NODE"}
     row = getRowByFields(table, criteria)
@@ -114,10 +117,12 @@ def argumentParser():
     """
     Parse the arguments from the command line
     """
-    parser = argparse.ArgumentParser(description='Check heath of the GPFS node')
+    parser = argparse.ArgumentParser(
+        description='Check heath of the GPFS node')
 
     subParser = parser.add_subparsers()
-    healthParser = subParser.add_parser('health', help='Check the health on a node')
+    healthParser = subParser.add_parser(
+        'health', help='Check the health on a node')
     healthParser.add_argument('-n', '--node', dest='node', action='store_true',
                               help='Check state of the nodes', default=os.getenv('HOSTNAME'))
     healthParser.add_argument('--component', dest='component', action='store',
