@@ -86,7 +86,7 @@ def checkRequirements():
         checkResult.printMonitoringOutput()
 
 
-def checkHealth(args):
+def checkNodeHealth(args):
     checkResult = CheckResult()
     checkResult.serviceName = "Spectrum Scale Node Health"
 
@@ -129,4 +129,4 @@ if __name__ == '__main__':
     parser = argumentParser()
     args = parser.parse_args()
     checkRequirements()
-    checkHealth(args)
+    checkNodeHealth(args)
