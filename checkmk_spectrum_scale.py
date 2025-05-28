@@ -3,7 +3,6 @@ import argparse
 import sys
 import os
 import subprocess
-import re
 import csv
 
 STATE_OK = 0
@@ -39,7 +38,7 @@ class CheckResult:
 
     def printMonitoringOutput(self):
         """
-        Concatenate full message and print it, then exit with returnCode     
+        Concatenate full message and print it, then exit with returnCode
 
         Error:
             Prints unknown state if the all variables in the instance are default.
@@ -130,7 +129,7 @@ def argumentParser():
     parser = argparse.ArgumentParser(
         description='Check heath of the GPFS node')
     parser.add_argument('--create-check', dest='createCheck', action='store_true',
-                              help='Create a local check file to the specified command for checkMK discovery')
+                        help='Create a local check file to the specified command for checkMK discovery')
 
     subParser = parser.add_subparsers()
     healthParser = subParser.add_parser(
