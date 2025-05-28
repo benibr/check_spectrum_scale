@@ -118,14 +118,17 @@ def argumentParser():
     parser = argparse.ArgumentParser(description='Check heath of the GPFS node')
 
     subParser = parser.add_subparsers()
-    statusParser = subParser.add_parser('health', help='Check the health on a node')
-    statusParser.add_argument('-n', '--node', dest='node', action='store_true',
+    healthParser = subParser.add_parser('health', help='Check the health on a node')
+    healthParser.add_argument('-n', '--node', dest='node', action='store_true',
                               help='Check state of the nodes', default=os.getenv('HOSTNAME'))
     return parser
 
 
 if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        sys.argv.append("health")
     parser = argumentParser()
     args = parser.parse_args()
     checkRequirements()
+
     checkNodeHealth(args)
