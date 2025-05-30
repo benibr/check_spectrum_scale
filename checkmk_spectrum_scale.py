@@ -113,7 +113,7 @@ def checkNodeHealth(args):
     try:
         state = row["status"]
     except TypeError:
-        checkResult.returnMessage = f"UNKNOWN: Health of '{comp}' not found"
+        checkResult.returnMessage = f"UNKNOWN: Health for Component '{comp}' on node '{args.node}' not found"
     finally:
         if ((state == "HEALTHY") or (state == "TIPS")):
             checkResult.returnCode = STATE_OK
