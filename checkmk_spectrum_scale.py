@@ -4,6 +4,7 @@ import sys
 import os
 import subprocess
 import csv
+import socket
 
 STATE_OK = 0
 STATE_WARNING = 1
@@ -131,6 +132,9 @@ def argumentParser():
     """
     Parse the arguments from the command line
     """
+    _hostname = os.getenv('HOSTNAME')
+    if not _hostname:
+        _hostname = socket.gethostname()
     parser = argparse.ArgumentParser(
         description='Check heath of the GPFS node')
     parser.add_argument('--create-check', dest='createCheck', action='store_true',
@@ -140,7 +144,7 @@ def argumentParser():
     healthParser = subParser.add_parser(
         'health', help='Check the health on a node')
     healthParser.add_argument('-n', '--node', dest='node', action='store',
-                              help='Check state of the nodes', default=os.getenv('HOSTNAME'))
+                              help='Check state of the nodes', default=_hostname)
     healthParser.add_argument('--component', dest='component', action='store',
                               help='Check state of the nodes', default='NODE')
     return parser
