@@ -1,0 +1,17 @@
+Node name:      gpfs01
+System type:    MTM:5149-23E Serial:XXXXXXX
+Node status:    HEALTHY
+Status Change:  1 hour ago
+
+Component       Status        Status Change     Reasons & Notices
+-------------------------------------------------------------------------------
+GPFS            HEALTHY       21 days ago       -
+NETWORK         HEALTHY       21 days ago       -
+FILESYSTEM      HEALTHY       21 days ago       -
+GUI             HEALTHY       1 hour ago        -
+NATIVE_RAID     HEALTHY       21 days ago       -
+PERFMON         HEALTHY       21 days ago       -
+THRESHOLD       HEALTHY       21 days ago       -
+
+
+
