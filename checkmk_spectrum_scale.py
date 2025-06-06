@@ -98,6 +98,27 @@ def createCheck(args):
     sys.exit(STATE_OK)
 
 
+def getNodeName():
+    """
+    Try to get local nodes name from env var (usually not set when checkMK executes check)
+    the default to asking the cluster for the nodes name
+    and if that failes, use Unix gethostname
+    """
+    name = os.getenv('HOSTNAME')
+    if not name:
+        criteria = {"component": "NODE", "entitytype": "NODE"}
+        output = executeBashCommand(
+            f"/usr/lpp/mmfs/bin/mmhealth node show -Y")
+        stateOutput = (row for row in output.split(
+            "\n") if row.startswith("mmhealth:State:"))
+        table = csv.DictReader(stateOutput, delimiter=":")
+        row = getRowByFields(table, criteria)
+        name = row["entityname"]
+    if not name:
+        name = socket.gethostname()
+    return name
+
+
 def checkNodeHealth(args):
     state = None
     checkResult = CheckResult()
@@ -132,9 +153,7 @@ def argumentParser():
     """
     Parse the arguments from the command line
     """
-    _hostname = os.getenv('HOSTNAME')
-    if not _hostname:
-        _hostname = socket.gethostname()
+    _hostname = getNodeName()
     parser = argparse.ArgumentParser(
         description='Check heath of the GPFS node')
     parser.add_argument('--create-check', dest='createCheck', action='store_true',
